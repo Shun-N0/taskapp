@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV.fetch("DB_HOST") { "localhost" } %>
+  username: <%= ENV.fetch("DB_USER") { "postgres" } %>
+  password: <%= ENV.fetch("DB_PASSWORD") { "" } %>
+
+development:
+  <<: *default
+  database: <%= ENV.fetch("DB_NAME") { "taskapp_development" } %>
+
+test:
+  <<: *default
+  database: taskapp_test
+
+production:
+  <<: *default
+  database: taskapp_production
+  username: <%= ENV["DB_USER"] %>
+  password: <%= ENV["DB_PASSWORD"] %>
