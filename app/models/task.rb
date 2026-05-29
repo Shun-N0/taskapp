@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Task < ApplicationRecord
   belongs_to :user
   belongs_to :category, optional: true
@@ -7,3 +9,4 @@ class Task < ApplicationRecord
 
   validates :title, presence: true
 end
+
