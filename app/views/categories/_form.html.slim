@@ -1,0 +1,15 @@
+= form_with model: category do |f|
+  - if category.errors.any?
+    ul
+      - category.errors.full_messages.each do |message|
+        li = message
+
+  div
+    = f.label :name, "カテゴリ名"
+    = f.text_field :name
+
+  div
+    = f.label :color, "カラー"
+    = f.color_field :color
+
+  = f.submit "保存"
