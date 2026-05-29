@@ -1,0 +1,10 @@
+ja:
+  enums:
+    task:
+      priority:
+        low: "低"
+        medium: "中"
+        high: "高"
+      status:
+        incomplete: "未完了"
+        complete: "完了"
