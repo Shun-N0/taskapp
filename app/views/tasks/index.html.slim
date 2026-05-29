@@ -1,0 +1,22 @@
+h1 タスク一覧
+
+= link_to "新規作成", new_task_path
+
+table
+  thead
+    tr
+      th タイトル
+      th 優先度
+      th ステータス
+      th 期日
+      th
+  tbody
+    - @tasks.each do |task|
+      tr
+        td = link_to task.title, task_path(task)
+        td = task.priority
+        td = task.status
+        td = task.due_date
+        td
+          = link_to "編集", edit_task_path(task)
+          = link_to "削除", task_path(task), data: { turbo_method: :delete, turbo_confirm: "削除しますか？" }

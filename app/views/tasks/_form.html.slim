@@ -1,0 +1,31 @@
+= form_with model: task do |f|
+  - if task.errors.any?
+    ul
+      - task.errors.full_messages.each do |message|
+        li = message
+
+  div
+    = f.label :title, "タイトル"
+    = f.text_field :title
+
+  div
+    = f.label :description, "説明"
+    = f.text_area :description
+
+  div
+    = f.label :due_date, "期日"
+    = f.date_field :due_date
+
+  div
+    = f.label :priority, "優先度"
+    = f.select :priority, Task.priorities.keys.map { |k| [I18n.t("enums.task.priority.#{k}"), k] }
+
+  div
+    = f.label :status, "ステータス"
+    = f.select :status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }
+
+  div
+    = f.label :category_id, "カテゴリ"
+    = f.collection_select :category_id, current_user.categories, :id, :name, { include_blank: "なし" }
+
+  = f.submit "保存"
