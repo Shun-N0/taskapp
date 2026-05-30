@@ -10,6 +10,7 @@ gem 'propshaft'
 gem 'puma', '>= 5.0'
 gem 'rails', '~> 8.1.3'
 gem 'stimulus-rails'
+gem 'tailwindcss-rails'
 gem 'turbo-rails'
 
 # テンプレートエンジン
