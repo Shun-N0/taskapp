@@ -13,7 +13,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"
+    command: bash -c "rm -f tmp/pids/server.pid && bin/rails tailwindcss:build && (bin/rails tailwindcss:watch -- --poll &) && bin/rails s -b '0.0.0.0'"
     volumes:
       - .:/rails
       - bundle_data:/usr/local/bundle
