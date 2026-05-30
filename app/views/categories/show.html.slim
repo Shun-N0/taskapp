@@ -1,9 +1,16 @@
-h1 = @category.name
+div class="bg-white shadow rounded p-6"
+  div class="flex items-center justify-between mb-6"
+    h1 class="text-2xl font-bold" = @category.name
+    div class="flex gap-2"
+      = link_to '編集', edit_category_path(@category), class: 'bg-gray-100 text-gray-700 px-4 py-2 rounded hover:bg-gray-200 text-sm'
+      = link_to '削除', category_path(@category), data: { turbo_method: :delete, turbo_confirm: '削除しますか？' }, class: 'bg-red-100 text-red-700 px-4 py-2 rounded hover:bg-red-200 text-sm'
 
-p
-  strong カラー:
-  = @category.color
+  dl class="space-y-3 text-sm"
+    div class="flex gap-4 items-center"
+      dt class="w-24 text-gray-500 font-medium" カラー
+      dd class="flex items-center gap-2"
+        div class="w-5 h-5 rounded border border-gray-300" style="background-color: #{@category.color}"
+        span = @category.color
 
-= link_to '編集', edit_category_path(@category)
-= link_to '削除', category_path(@category), data: { turbo_method: :delete, turbo_confirm: '削除しますか？' }
-= link_to '一覧へ', categories_path
+  div class="mt-6"
+    = link_to '一覧へ', categories_path, class: 'text-sm text-blue-600 hover:underline'
