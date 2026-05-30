@@ -1,25 +1,37 @@
-h1 = @task.title
+div class="bg-white shadow rounded p-6"
+  div class="flex items-center justify-between mb-6"
+    h1 class="text-2xl font-bold" = @task.title
+    div class="flex gap-2"
+      = link_to '編集', edit_task_path(@task), class: 'bg-gray-100 text-gray-700 px-4 py-2 rounded hover:bg-gray-200 text-sm'
+      = link_to '削除', task_path(@task), data: { turbo_method: :delete, turbo_confirm: '削除しますか？' }, class: 'bg-red-100 text-red-700 px-4 py-2 rounded hover:bg-red-200 text-sm'
 
-p
-  strong 説明:
-  = @task.description
+  dl class="space-y-3 text-sm"
+    div class="flex gap-4"
+      dt class="w-24 text-gray-500 font-medium" 優先度
+      dd
+        - priority_class = { 'high' => 'bg-red-100 text-red-700', 'medium' => 'bg-yellow-100 text-yellow-700', 'low' => 'bg-blue-100 text-blue-700' }
+        span class="px-2 py-1 rounded text-xs font-medium #{priority_class[@task.priority]}"
+          = @task.priority
 
-p
-  strong 優先度:
-  = @task.priority
+    div class="flex gap-4"
+      dt class="w-24 text-gray-500 font-medium" ステータス
+      dd
+        - status_class = @task.complete? ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'
+        span class="px-2 py-1 rounded text-xs font-medium #{status_class}"
+          = @task.status
 
-p
-  strong ステータス:
-  = @task.status
+    div class="flex gap-4"
+      dt class="w-24 text-gray-500 font-medium" 期日
+      dd class="text-gray-700" = @task.due_date
 
-p
-  strong 期日:
-  = @task.due_date
+    div class="flex gap-4"
+      dt class="w-24 text-gray-500 font-medium" カテゴリ
+      dd class="text-gray-700" = @task.category&.name || 'なし'
 
-p
-  strong カテゴリ:
-  = @task.category&.name
+    - if @task.description.present?
+      div class="flex gap-4"
+        dt class="w-24 text-gray-500 font-medium" 説明
+        dd class="text-gray-700 whitespace-pre-wrap" = @task.description
 
-= link_to '編集', edit_task_path(@task)
-= link_to '削除', task_path(@task), data: { turbo_method: :delete, turbo_confirm: '削除しますか？' }
-= link_to '一覧へ', tasks_path
+  div class="mt-6"
+    = link_to '一覧へ', tasks_path, class: 'text-sm text-blue-600 hover:underline'
