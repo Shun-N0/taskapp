@@ -20,6 +20,6 @@ p
   strong カテゴリ:
   = @task.category&.name
 
-= link_to "編集", edit_task_path(@task)
-= link_to "削除", task_path(@task), data: { turbo_method: :delete, turbo_confirm: "削除しますか？" }
-= link_to "一覧へ", tasks_path
+= link_to '編集', edit_task_path(@task)
+= link_to '削除', task_path(@task), data: { turbo_method: :delete, turbo_confirm: '削除しますか？' }
+= link_to '一覧へ', tasks_path

@@ -5,27 +5,27 @@
         li = message
 
   div
-    = f.label :title, "タイトル"
+    = f.label :title, 'タイトル'
     = f.text_field :title
 
   div
-    = f.label :description, "説明"
+    = f.label :description, '説明'
     = f.text_area :description
 
   div
-    = f.label :due_date, "期日"
+    = f.label :due_date, '期日'
     = f.date_field :due_date
 
   div
-    = f.label :priority, "優先度"
-    = f.select :priority, Task.priorities.keys.map { |k| [I18n.t("enums.task.priority.#{k}"), k] }
+    = f.label :priority, '優先度'
+    = f.select(:priority, Task.priorities.keys.map { |k| [I18n.t("enums.task.priority.#{k}"), k] })
 
   div
-    = f.label :status, "ステータス"
-    = f.select :status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }
+    = f.label :status, 'ステータス'
+    = f.select(:status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] })
 
   div
-    = f.label :category_id, "カテゴリ"
-    = f.collection_select :category_id, current_user.categories, :id, :name, { include_blank: "なし" }
+    = f.label :category_id, 'カテゴリ'
+    = f.collection_select :category_id, current_user.categories, :id, :name, { include_blank: 'なし' }
 
-  = f.submit "保存"
+  = f.submit '保存'
