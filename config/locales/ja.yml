@@ -2,9 +2,43 @@ ja:
   enums:
     task:
       priority:
-        low: "低"
-        medium: "中"
-        high: "高"
+        low: '低'
+        medium: '中'
+        high: '高'
       status:
-        incomplete: "未完了"
-        complete: "完了"
+        incomplete: '未完了'
+        complete: '完了'
+
+  errors:
+    messages:
+      not_saved:
+        one: '1つのエラーが発生しました'
+        other: '%{count}つのエラーが発生しました'
+      not_found: '見つかりませんでした'
+
+  activerecord:
+    errors:
+      messages:
+        not_found: '見つかりませんでした'
+      models:
+        user:
+          attributes:
+            email:
+              not_found: '見つかりませんでした'
+
+  devise:
+    failure:
+      invalid: 'メールアドレスまたはパスワードが正しくありません'
+      not_found_in_database: 'メールアドレスまたはパスワードが正しくありません'
+      already_authenticated: 'すでにログインしています'
+      unauthenticated: 'ログインしてください'
+    sessions:
+      signed_in: 'ログインしました'
+      signed_out: 'ログアウトしました'
+    registrations:
+      signed_up: 'アカウントを作成しました'
+      updated: 'アカウント情報を更新しました'
+      destroyed: 'アカウントを削除しました'
+    passwords:
+      send_instructions: 'パスワードリセットのメールを送信しました'
+      updated: 'パスワードを変更しました'

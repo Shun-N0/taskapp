@@ -1,0 +1,29 @@
+div class="max-w-md mx-auto mt-24"
+  div class="bg-white shadow rounded px-12 py-10"
+    h2 class="text-2xl font-bold mb-8 text-center" アカウント情報の編集
+
+    = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+      = render 'devise/shared/error_messages', resource: resource
+
+      div class="space-y-6"
+        div
+          = f.label :email, 'メールアドレス', class: 'block text-sm font-medium text-gray-700 mb-1'
+          = f.email_field :email, autofocus: true, autocomplete: 'email', class: 'w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
+
+        div
+          = f.label :password, '新しいパスワード', class: 'block text-sm font-medium text-gray-700 mb-1'
+          p class="text-xs text-gray-500 mb-1" 変更しない場合は空欄のままにしてください
+          = f.password_field :password, autocomplete: 'new-password', class: 'w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
+
+        div
+          = f.label :password_confirmation, '新しいパスワード（確認）', class: 'block text-sm font-medium text-gray-700 mb-1'
+          = f.password_field :password_confirmation, autocomplete: 'new-password', class: 'w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
+
+        div
+          = f.label :current_password, '現在のパスワード', class: 'block text-sm font-medium text-gray-700 mb-1'
+          p class="text-xs text-gray-500 mb-1" 変更を保存するために現在のパスワードが必要です
+          = f.password_field :current_password, autocomplete: 'current-password', class: 'w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
+
+        = f.submit '変更を保存する', class: 'w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 text-sm cursor-pointer'
+
+    = render 'devise/shared/links'
