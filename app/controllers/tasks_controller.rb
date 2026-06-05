@@ -9,7 +9,7 @@ class TasksController < ApplicationController
     @current_category_id = params[:category_id].presence
     @task_counts = current_user.tasks.group(:category_id).count
     @total_count = current_user.tasks.count
-    tasks = current_user.tasks.order(Arel.sql('due_date ASC NULLS LAST'), created_at: :desc)
+    tasks = current_user.tasks.includes(:category).order(Arel.sql('due_date ASC NULLS LAST'), created_at: :desc)
     tasks = tasks.where(category_id: @current_category_id) if @current_category_id
     @tasks = tasks
   end
