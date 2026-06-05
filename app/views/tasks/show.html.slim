@@ -11,14 +11,14 @@ div class="bg-white shadow rounded p-6"
       dd
         - priority_class = { 'high' => 'bg-red-100 text-red-700', 'medium' => 'bg-yellow-100 text-yellow-700', 'low' => 'bg-blue-100 text-blue-700' }
         span class="px-2 py-1 rounded text-xs font-medium #{priority_class[@task.priority]}"
-          = @task.priority
+          = t("enums.task.priority.#{@task.priority}")
 
     div class="flex gap-4"
       dt class="w-24 text-gray-500 font-medium" ステータス
       dd
         - status_class = @task.complete? ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'
         span class="px-2 py-1 rounded text-xs font-medium #{status_class}"
-          = @task.status
+          = t("enums.task.status.#{@task.status}")
 
     div class="flex gap-4"
       dt class="w-24 text-gray-500 font-medium" 期日
