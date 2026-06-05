@@ -5,7 +5,13 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    @tasks = current_user.tasks.order(created_at: :desc)
+    @categories = current_user.categories.order(:created_at)
+    @current_category_id = params[:category_id].presence
+    @task_counts = current_user.tasks.group(:category_id).count
+    @total_count = current_user.tasks.count
+    tasks = current_user.tasks.order(Arel.sql('due_date ASC NULLS LAST'), created_at: :desc)
+    tasks = tasks.where(category_id: @current_category_id) if @current_category_id
+    @tasks = tasks
   end
 
   def show; end
