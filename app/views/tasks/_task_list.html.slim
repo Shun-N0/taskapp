@@ -1,0 +1,32 @@
+div id="task_list" class="space-y-10"
+  - if tasks.empty?
+    div class="bg-white rounded-2xl border border-gray-200 shadow-sm py-20 px-6 text-center"
+      svg class="w-14 h-14 mx-auto text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"
+        path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+      p class="mt-5 text-lg text-gray-600 font-semibold" タスクがありません
+      p class="mt-1.5 text-gray-400"
+        = current_category_id ? 'このカテゴリにはまだタスクがありません' : '「新規作成」から最初のタスクを追加しましょう'
+      = link_to '新規作成', new_task_path, class: 'mt-8 inline-block bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 font-medium shadow-sm'
+  - else
+    - active_tasks = tasks.reject(&:complete?)
+    - done_tasks = tasks.select(&:complete?)
+    section
+      h2 class="flex items-center gap-2.5 mb-4 text-sm font-bold text-gray-500 uppercase tracking-wider"
+        span 未完了
+        span class="min-w-[1.5rem] text-center px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 text-xs font-bold"
+          = active_tasks.size
+      - if active_tasks.empty?
+        div class="bg-green-50 border border-green-200 rounded-2xl py-10 px-6 text-center"
+          p class="text-3xl" 🎉
+          p class="mt-2 text-green-700 font-semibold" すべてのタスクが完了しました！
+      - else
+        div class="space-y-3"
+          = render partial: 'task_row', collection: active_tasks, as: :task, locals: { current_category_id: current_category_id }
+    - if done_tasks.any?
+      section
+        h2 class="flex items-center gap-2.5 mb-4 text-sm font-bold text-gray-400 uppercase tracking-wider"
+          span 完了済み
+          span class="min-w-[1.5rem] text-center px-2 py-0.5 rounded-full bg-gray-200 text-gray-600 text-xs font-bold"
+            = done_tasks.size
+        div class="space-y-3"
+          = render partial: 'task_row', collection: done_tasks, as: :task, locals: { current_category_id: current_category_id }

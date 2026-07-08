@@ -7,10 +7,12 @@ module TasksHelper
     'low' => 'bg-blue-100 text-blue-700'
   }.freeze
 
-  BADGE_BASE = 'px-2 py-1 rounded text-xs font-medium'
+  BADGE_BASE = 'inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold'
+
+  WDAYS_JA = %w[日 月 火 水 木 金 土].freeze
 
   def priority_badge(task)
-    content_tag(:span, t("enums.task.priority.#{task.priority}"),
+    content_tag(:span, "優先度：#{t("enums.task.priority.#{task.priority}")}",
                 class: "#{BADGE_BASE} #{PRIORITY_CLASSES[task.priority]}")
   end
 
@@ -20,36 +22,41 @@ module TasksHelper
                 class: "#{BADGE_BASE} #{color}")
   end
 
-  def due_date_cell(task)
-    base = 'px-4 py-3'
+  def category_chip(task)
+    return if task.category.nil?
 
-    if task.due_date.nil?
-      return content_tag(:td, '―', class: "#{base} text-gray-400")
-    end
-
-    if task.complete?
-      return content_tag(:td, task.due_date, class: "#{base} text-gray-400 line-through")
-    end
-
-    classes, label = due_date_style(task)
-
-    content_tag(:td, class: "#{base} #{classes}") do
-      concat task.due_date.to_s
-      concat content_tag(:span, label, class: 'ml-2 text-xs') if label
+    content_tag(:span, class: "#{BADGE_BASE} gap-1.5 bg-gray-100 text-gray-600") do
+      concat content_tag(:span, '', class: 'w-2 h-2 rounded-full shrink-0',
+                                    style: "background-color: #{task.category.color};")
+      concat task.category.name
     end
   end
 
-  private
-
-  def due_date_style(task)
-    if task.overdue?
-      ['text-red-700 font-semibold', "(#{-task.days_until_due}日遅れ)"]
-    elsif task.due_today?
-      ['text-red-600 font-semibold', '今日']
-    elsif task.due_soon?
-      ['text-orange-600 font-medium', "あと#{task.days_until_due}日"]
-    else
-      ['text-gray-500', nil]
+  def due_date_chip(task)
+    if task.due_date.nil?
+      return content_tag(:span, '期日なし', class: "#{BADGE_BASE} bg-gray-50 text-gray-400")
     end
+
+    date = task.due_date.strftime('%-m/%-d')
+
+    label, color =
+      if task.complete?
+        [date, 'bg-gray-100 text-gray-400 line-through']
+      elsif task.overdue?
+        ["#{date} ・ #{-task.days_until_due}日遅れ", 'bg-red-100 text-red-700']
+      elsif task.due_today?
+        ['今日まで', 'bg-red-100 text-red-700']
+      elsif task.due_soon?
+        ["#{date} ・ あと#{task.days_until_due}日", 'bg-orange-100 text-orange-700']
+      else
+        [date, 'bg-gray-100 text-gray-600']
+      end
+
+    content_tag(:span, label, class: "#{BADGE_BASE} #{color}")
+  end
+
+  def today_heading
+    today = Date.current
+    "#{today.month}月#{today.day}日（#{WDAYS_JA[today.wday]}）"
   end
 end
