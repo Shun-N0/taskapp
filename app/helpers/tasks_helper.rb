@@ -33,9 +33,7 @@ module TasksHelper
   end
 
   def due_date_chip(task)
-    if task.due_date.nil?
-      return content_tag(:span, '期日なし', class: "#{BADGE_BASE} bg-gray-50 text-gray-400")
-    end
+    return content_tag(:span, '期日なし', class: "#{BADGE_BASE} bg-gray-50 text-gray-400") if task.due_date.nil?
 
     date = task.due_date.strftime('%-m/%-d')
 
@@ -60,3 +58,4 @@ module TasksHelper
     "#{today.month}月#{today.day}日（#{WDAYS_JA[today.wday]}）"
   end
 end
+
