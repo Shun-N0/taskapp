@@ -2,10 +2,14 @@
 
 class TasksController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_task, only: %i[show edit update destroy]
+  before_action :set_task, only: %i[show edit update destroy toggle]
 
   def index
-    @tasks = current_user.tasks.order(created_at: :desc)
+    @categories = current_user.categories.order(:created_at)
+    @current_category_id = params[:category_id].presence
+    @task_counts = current_user.tasks.group(:category_id).count
+    @total_count = current_user.tasks.count
+    @tasks = filtered_tasks
   end
 
   def show; end
@@ -38,7 +42,28 @@ class TasksController < ApplicationController
     redirect_to tasks_path, notice: 'タスクを削除しました'
   end
 
+  def toggle
+    @task.update(status: @task.complete? ? :incomplete : :complete)
+    @current_category_id = params[:category_id].presence
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          'task_list',
+          partial: 'tasks/task_list',
+          locals: { tasks: filtered_tasks, current_category_id: @current_category_id }
+        )
+      end
+      format.html { redirect_to tasks_path(category_id: @current_category_id) }
+    end
+  end
+
   private
+
+  def filtered_tasks
+    tasks = current_user.tasks.includes(:category).order(Arel.sql('due_date ASC NULLS LAST'), created_at: :desc)
+    tasks = tasks.where(category_id: @current_category_id) if @current_category_id
+    tasks
+  end
 
   def set_task
     @task = current_user.tasks.find(params.expect(:id))

@@ -1,0 +1,23 @@
+- checked = task.complete?
+div id=dom_id(task) class="group flex items-start gap-4 bg-white rounded-2xl border border-gray-200 shadow-sm px-5 py-4 transition hover:shadow-md hover:border-gray-300 #{'opacity-60' if checked}"
+  = button_to toggle_task_path(task, category_id: current_category_id), method: :patch, class: 'shrink-0 mt-0.5 cursor-pointer', title: (checked ? '未完了に戻す' : '完了にする')
+    - check_class = checked ? 'bg-green-500 border-green-500 text-white' : 'border-gray-300 text-transparent hover:border-green-400 hover:text-green-300'
+    span class="w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors #{check_class}"
+      svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"
+        path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"
+  div class="flex-1 min-w-0"
+    - title_class = "text-base font-semibold leading-snug hover:underline #{checked ? 'text-gray-400 line-through' : 'text-gray-900'}"
+    = link_to task.title, task_path(task), class: title_class
+    - if task.description.present?
+      p class="mt-0.5 text-sm text-gray-400 truncate" = task.description
+    div class="mt-2.5 flex flex-wrap items-center gap-2"
+      = due_date_chip(task)
+      = priority_badge(task)
+      = category_chip(task)
+  div class="flex items-center gap-1 shrink-0"
+    = link_to edit_task_path(task), class: 'p-2 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors', title: '編集'
+      svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"
+        path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125"
+    = link_to task_path(task), data: { turbo_method: :delete, turbo_confirm: "「#{task.title}」を削除しますか？" }, class: 'p-2 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors', title: '削除'
+      svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"
+        path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L5.772 5.79m13.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
