@@ -10,13 +10,41 @@ ja:
         complete: '完了'
 
   errors:
+    format: '%{attribute}%{message}'
     messages:
       not_saved:
         one: '1つのエラーが発生しました'
         other: '%{count}つのエラーが発生しました'
       not_found: '見つかりませんでした'
+      blank: 'を入力してください'
+      taken: 'はすでに存在します'
+      invalid: 'は不正な値です'
+      confirmation: 'と%{attribute}の入力が一致しません'
+      too_short: 'は%{count}文字以上で入力してください'
+      too_long: 'は%{count}文字以内で入力してください'
+      required: 'を入力してください'
 
   activerecord:
+    models:
+      user: 'ユーザー'
+      task: 'タスク'
+      category: 'カテゴリ'
+    attributes:
+      user:
+        email: 'メールアドレス'
+        password: 'パスワード'
+        password_confirmation: 'パスワード（確認）'
+        current_password: '現在のパスワード'
+      task:
+        title: 'タイトル'
+        description: '説明'
+        due_date: '期日'
+        priority: '優先度'
+        status: 'ステータス'
+        category: 'カテゴリ'
+      category:
+        name: 'カテゴリ名'
+        color: 'カラー'
     errors:
       messages:
         not_found: '見つかりませんでした'
