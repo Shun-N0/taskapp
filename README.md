@@ -22,3 +22,7 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+## 今後の実装予定
+
+* パスワード再設定機能（メール送信サービスとの連携が必要なため、現在は無効化している）

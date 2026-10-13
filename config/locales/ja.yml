@@ -67,6 +67,3 @@ ja:
       signed_up: 'アカウントを作成しました'
       updated: 'アカウント情報を更新しました'
       destroyed: 'アカウントを削除しました'
-    passwords:
-      send_instructions: 'パスワードリセットのメールを送信しました'
-      updated: 'パスワードを変更しました'
