@@ -17,5 +17,10 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   # Defines the root path route ("/")
-  root "tasks#index"
+  authenticated :user do
+    root "tasks#index", as: :authenticated_root
+  end
+  devise_scope :user do
+    root "devise/sessions#new"
+  end
 end
