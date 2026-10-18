@@ -14,6 +14,13 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_user_session_path
   end
 
+  test 'ログイン済みでrootにアクセスするとタスク一覧を表示' do
+    sign_in @user
+    get root_path
+    assert_response :success
+    assert_select 'a', text: 'テストタスク'
+  end
+
   test 'ログイン済みでindexにアクセスできる' do
     sign_in @user
     get tasks_path
